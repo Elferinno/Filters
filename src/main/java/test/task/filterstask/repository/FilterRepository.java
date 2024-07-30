@@ -5,3 +5,4 @@ import test.task.filterstask.model.Filter;
 
 public interface FilterRepository extends JpaRepository<Filter, Long> {
 }
+

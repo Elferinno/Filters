@@ -15,16 +15,6 @@ public class FilterController {
     @Autowired
     private FilterService filterService;
 
-//    @Autowired
-//    public FilterController(FilterService filterService) {
-//        this.filterService = filterService;
-//    }
-
-//    @GetMapping
-//    public String a() {
-//        return "a";
-//    }
-
     @GetMapping
     public List<Filter> getAllFilters() {
         return filterService.getAllFilters();
