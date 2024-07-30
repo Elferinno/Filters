@@ -4,6 +4,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import test.task.filterstask.model.Criteria;
+import test.task.filterstask.model.CriteriaType;
 import test.task.filterstask.model.Filter;
 import test.task.filterstask.repository.CriteriaRepository;
 import test.task.filterstask.repository.FilterRepository;
@@ -23,20 +24,23 @@ public class DataInitializer {
             filter2 = filterRepository.save(filter2);
 
             Criteria criteria1 = new Criteria();
-            criteria1.setType("Amount");
+            criteria1.setType(CriteriaType.AMOUNT);
             criteria1.setValue("100");
+            criteria1.setCondition("MORE");
             criteria1.setFilter(filter1);
             criteriaRepository.save(criteria1);
 
             Criteria criteria2 = new Criteria();
-            criteria2.setType("Title");
+            criteria2.setType(CriteriaType.TITLE);
             criteria2.setValue("Sample Title");
+            criteria2.setCondition("CONTAINS");
             criteria2.setFilter(filter1);
             criteriaRepository.save(criteria2);
 
             Criteria criteria3 = new Criteria();
-            criteria3.setType("Date");
+            criteria3.setType(CriteriaType.DATE);
             criteria3.setValue("2024-07-29");
+            criteria3.setCondition("BEFORE");
             criteria3.setFilter(filter2);
             criteriaRepository.save(criteria3);
         };

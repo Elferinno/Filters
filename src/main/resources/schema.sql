@@ -12,6 +12,7 @@ CREATE TABLE criteria (
                           id BIGINT AUTO_INCREMENT PRIMARY KEY,
                           criteria_type VARCHAR(255),
                           criteria_value VARCHAR(255),
+                          condition VARCHAR(255),
                           filter_id BIGINT,
                           FOREIGN KEY (filter_id) REFERENCES filter(id)
 
