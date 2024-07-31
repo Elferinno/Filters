@@ -1,6 +1,7 @@
 package test.task.filterstask.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import test.task.filterstask.model.Filter;
@@ -45,9 +46,17 @@ public class FilterController {
     }
 
     @PostMapping
-    public ResponseEntity<Filter> createFilter(@RequestBody Filter filter) {
-        Filter createdFilter = filterService.saveFilter(filter);
-        return ResponseEntity.ok(createdFilter);
+    public ResponseEntity<?> createFilter(@RequestBody Filter filter) {
+        if (filter.getCriteriaList() == null || filter.getCriteriaList().isEmpty()) {
+            return ResponseEntity.badRequest().body("A filter must contain at least one criteria.");
+        }
+
+        try {
+            Filter createdFilter = filterService.saveFilter(filter);
+            return ResponseEntity.ok(createdFilter);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error saving filter: " + e.getMessage());
+        }
     }
 
     @DeleteMapping("/{id}")

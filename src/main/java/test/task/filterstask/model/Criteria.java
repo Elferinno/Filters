@@ -1,10 +1,12 @@
 package test.task.filterstask.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import test.task.filterstask.util.CriteriaTypeDeserializer;
 
 @Data
 @AllArgsConstructor
@@ -17,6 +19,7 @@ public class Criteria {
 
     @Column(name = "criteria_type")
     @Enumerated(EnumType.STRING)
+    @JsonDeserialize(using = CriteriaTypeDeserializer.class)
     private CriteriaType type; // e.g., "Amount", "Title", "Date"
 
     // stores condition relevant to the criteria type

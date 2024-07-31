@@ -14,26 +14,3 @@ public interface FilterService {
     Filter getFilterById(Long id);
     void deleteFilter(Long id);
 }
-
-//@Service
-//public class FilterService {
-//
-//    @Autowired
-//    private FilterRepository filterRepository;
-//
-//    public List<Filter> getAllFilters() {
-//        return filterRepository.findAll();
-//    }
-//
-//    public Filter saveFilter(Filter filter) {
-//        return filterRepository.save(filter);
-//    }
-//
-//    public Optional<Filter> getFilterById(Long id) {
-//        return filterRepository.findById(id);
-//    }
-//
-//    public void deleteFilter(Long id) {
-//        filterRepository.deleteById(id);
-//    }
-//}
