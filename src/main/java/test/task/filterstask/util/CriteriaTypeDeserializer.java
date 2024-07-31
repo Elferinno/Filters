@@ -5,6 +5,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import java.io.IOException;
+import java.util.Locale;
+
 import test.task.filterstask.model.CriteriaType;
 
 public class CriteriaTypeDeserializer extends JsonDeserializer<CriteriaType> {
@@ -13,8 +15,7 @@ public class CriteriaTypeDeserializer extends JsonDeserializer<CriteriaType> {
     @Override
     public CriteriaType deserialize(JsonParser p, DeserializationContext ctxt) throws IOException,
             JsonProcessingException {
-        String value = p.getText().toUpperCase();
+        String value = p.getText().toUpperCase(Locale.ROOT);
         return CriteriaType.valueOf(value);
     }
 }
-

@@ -1,4 +1,4 @@
-package test.task.filterstask.service.Implemitation;
+package test.task.filterstask.service.implemitation;
 
         import org.springframework.beans.factory.annotation.Autowired;
         import org.springframework.stereotype.Service;

@@ -1,10 +1,8 @@
-package test.task.filterstask.service.Implemitation;
+package test.task.filterstask.service.implemitation;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import test.task.filterstask.model.Criteria;
 import test.task.filterstask.model.Filter;
-import test.task.filterstask.repository.CriteriaRepository;
 import test.task.filterstask.repository.FilterRepository;
 import test.task.filterstask.service.FilterService;
 
