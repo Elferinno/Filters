@@ -1,19 +1,18 @@
 package test.task.filterstask.service.implemitation;
 
-        import org.springframework.beans.factory.annotation.Autowired;
+        import lombok.RequiredArgsConstructor;
         import org.springframework.stereotype.Service;
         import test.task.filterstask.model.Criteria;
         import test.task.filterstask.repository.CriteriaRepository;
         import test.task.filterstask.service.CriteriaService;
-
         import java.util.List;
-        import java.util.Optional;
+        import java.util.NoSuchElementException;
 
 @Service
+@RequiredArgsConstructor
 public class CriteriaServiceImpl implements CriteriaService {
 
-    @Autowired
-    private CriteriaRepository criteriaRepository;
+    private final CriteriaRepository criteriaRepository;
 
     @Override
     public Criteria saveCriteria(Criteria criteria) {
@@ -27,8 +26,8 @@ public class CriteriaServiceImpl implements CriteriaService {
 
     @Override
     public Criteria getCriteriaById(Long id) {
-        Optional<Criteria> criteria = criteriaRepository.findById(id);
-        return criteria.orElse(null);
+        return criteriaRepository.findById(id)
+                .orElseThrow(NoSuchElementException::new);
     }
 
     @Override

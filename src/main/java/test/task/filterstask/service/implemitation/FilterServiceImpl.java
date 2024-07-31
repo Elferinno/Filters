@@ -1,19 +1,19 @@
 package test.task.filterstask.service.implemitation;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import test.task.filterstask.model.Filter;
 import test.task.filterstask.repository.FilterRepository;
 import test.task.filterstask.service.FilterService;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.NoSuchElementException;
 
 @Service
+@RequiredArgsConstructor
 public class FilterServiceImpl implements FilterService {
 
-    @Autowired
-    private FilterRepository filterRepository;
+    private final FilterRepository filterRepository;
 
     @Override
     public Filter saveFilter(Filter filter) {
@@ -27,8 +27,8 @@ public class FilterServiceImpl implements FilterService {
 
     @Override
     public Filter getFilterById(Long id) {
-        Optional<Filter> filter = filterRepository.findById(id);
-        return filter.orElse(null);
+        return filterRepository.findById(id)
+                .orElseThrow(NoSuchElementException::new);
     }
 
     @Override

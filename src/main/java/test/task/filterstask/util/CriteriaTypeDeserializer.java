@@ -13,8 +13,7 @@ public class CriteriaTypeDeserializer extends JsonDeserializer<CriteriaType> {
 
     // Makes them uppercase so CriteriaType matches with enum uppercase values.
     @Override
-    public CriteriaType deserialize(JsonParser p, DeserializationContext ctxt) throws IOException,
-            JsonProcessingException {
+    public CriteriaType deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
         String value = p.getText().toUpperCase(Locale.ROOT);
         return CriteriaType.valueOf(value);
     }
