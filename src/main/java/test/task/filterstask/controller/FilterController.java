@@ -1,13 +1,18 @@
 package test.task.filterstask.controller;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import test.task.filterstask.model.Filter;
 import test.task.filterstask.service.FilterService;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/filters")
@@ -46,11 +51,7 @@ public class FilterController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createFilter(@RequestBody Filter filter) {
-        if (filter.getCriteriaList() == null || filter.getCriteriaList().isEmpty()) {
-            return ResponseEntity.badRequest().body("A filter must contain at least one criteria.");
-        }
-
+    public ResponseEntity<?> createFilter(@Valid @RequestBody Filter filter) {
         try {
             Filter createdFilter = filterService.saveFilter(filter);
             return ResponseEntity.ok(createdFilter);
@@ -68,6 +69,17 @@ public class FilterController {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<Map<String, String>> handleValidationExceptions(MethodArgumentNotValidException ex) {
+        Map<String, String> errors = new HashMap<>();
+        ex.getBindingResult().getAllErrors().forEach((error) -> {
+            String fieldName = ((FieldError) error).getField();
+            String errorMessage = error.getDefaultMessage();
+            errors.put(fieldName, errorMessage);
+        });
+        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
 
 }

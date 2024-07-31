@@ -1,15 +1,20 @@
 package test.task.filterstask.controller;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import test.task.filterstask.model.Criteria;
 import test.task.filterstask.model.CriteriaType;
 import test.task.filterstask.service.CriteriaService;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/criteria")
@@ -19,7 +24,7 @@ public class CriteriaController {
     private CriteriaService criteriaService;
 
     @PostMapping
-    public ResponseEntity<Criteria> createCriteria(@RequestBody Criteria criteria) {
+    public ResponseEntity<Criteria> createCriteria(@Valid @RequestBody Criteria criteria) {
         Criteria savedCriteria = criteriaService.saveCriteria(criteria);
         return new ResponseEntity<>(savedCriteria, HttpStatus.CREATED);
     }
@@ -70,4 +75,15 @@ public class CriteriaController {
     public ResponseEntity<List<String>> getDateConditions() {
         return ResponseEntity.ok(Arrays.asList("BEFORE", "AFTER", "ON"));
     }
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<Map<String, String>> handleValidationExceptions(MethodArgumentNotValidException ex) {
+        Map<String, String> errors = new HashMap<>();
+        ex.getBindingResult().getAllErrors().forEach((error) -> {
+            String fieldName = ((FieldError) error).getField();
+            String errorMessage = error.getDefaultMessage();
+            errors.put(fieldName, errorMessage);
+        });
+        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+    }
+
 }
